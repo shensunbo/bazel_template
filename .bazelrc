@@ -1,0 +1,71 @@
+# Bazel configuration file
+
+# Build settings
+build --cxxopt=-std=c++17
+build --host_cxxopt=-std=c++17
+
+# Compiler settings
+build --cxxopt=-Wall
+build --cxxopt=-Wextra
+build --cxxopt=-Werror
+
+# Debug configuration
+build:debug --compilation_mode=dbg
+build:debug --copt=-g
+build:debug --strip=never
+
+# Release configuration  
+build:release --compilation_mode=opt
+build:release --copt=-O2
+build:release --copt=-DNDEBUG
+build:release --strip=always
+
+# Fast build (for development)
+build:fast --compilation_mode=fastbuild
+build:fast --copt=-O1
+
+# Address sanitizer
+build:asan --strip=never
+build:asan --copt=-fsanitize=address
+build:asan --copt=-DADDRESS_SANITIZER
+build:asan --copt=-O1
+build:asan --copt=-g
+build:asan --copt=-fno-omit-frame-pointer
+build:asan --linkopt=-fsanitize=address
+
+# Memory sanitizer  
+build:msan --strip=never
+build:msan --copt=-fsanitize=memory
+build:msan --copt=-DMEMORY_SANITIZER
+build:msan --copt=-O1
+build:msan --copt=-g
+build:msan --copt=-fno-omit-frame-pointer
+build:msan --linkopt=-fsanitize=memory
+
+# Thread sanitizer
+build:tsan --strip=never
+build:tsan --copt=-fsanitize=thread
+build:tsan --copt=-DTHREAD_SANITIZER
+build:tsan --copt=-O1
+build:tsan --copt=-g
+build:tsan --copt=-fno-omit-frame-pointer
+build:tsan --linkopt=-fsanitize=thread
+
+# Test configuration
+test --test_output=errors
+test --test_summary=detailed
+
+# Coverage
+coverage --combined_report=lcov
+coverage --coverage_report_generator=@bazel_tools//tools/test:coverage_report_generator
+
+# Remote cache (uncomment and configure if using remote cache)
+# build --remote_cache=grpc://your-cache-server:9092
+# build --remote_timeout=3600
+
+# Local resources
+build --local_resources=memory=HOST_RAM*.75
+build --local_resources=cpu=HOST_CPUS*.75
+
+# Import user-specific settings (create .bazelrc.user for personal config)
+try-import %workspace%/.bazelrc.user

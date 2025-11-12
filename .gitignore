@@ -1,0 +1,29 @@
+# Bazel build outputs
+/bazel-*
+bazel-bin/
+bazel-out/
+bazel-testlogs/
+bazel-workspace/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# User-specific Bazel config
+.bazelrc.user
+
+# Coverage reports
+coverage_html/
+*.gcov
+*.lcov
+
+# Temporary files
+*.tmp
+*.temp
